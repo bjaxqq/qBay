@@ -1,10 +1,20 @@
 package src;
 
 import java.util.Scanner;
+import java.util.ArrayList;
+
+import src.Sell;
+import src.Logout;
+import src.User;
+import src.Item;
 
 public class Main {
 
     Scanner sc = new Scanner(System.in);
+
+    ArrayList<Item> itemsForSale = new ArrayList<>();
+
+    User currentUser;
 
     public void Username(){
 
@@ -20,23 +30,24 @@ public class Main {
 
         String password = "Alex";
 
-        if(currentuser.equals(username) && pass.equals(password)){
-
+      if(currentuser.equals(username) && pass.equals(password)){
         System.out.println("Log in success!");
-        this.Menu();
+        currentUser = new User("Alex", "Thimineur", "alex.thimineur@quinnipiac.edu");
 
-        }
+        this.Menu();
+}
           
        else{
 
         while (fail != 3) {   
         
             if(currentuser.equals(username) && pass.equals(password)){
-
                 System.out.println("Log in success!");
+                currentUser = new User("Alex", "Thimineur", "alex.thimineur@quinnipiac.edu");
                 this.Menu();
                 break;
-                }
+            }
+            
 
                 else{
 
@@ -58,45 +69,28 @@ public class Main {
         } 
         
  
-        public void Menu(){
-
-            System.out.println("Which option would you like to choose? Type B for Buy. Type S for Sell. Type C for Cart. Type L for Logout.");
-
-            String choice = sc.next().toUpperCase();
-            String B = "B";
-            String S = "S";
-            String C = "C";
-            String L = "L";
-
-        if(choice.equals(B)){
-
-
+        public void Menu() {
+            while (true) {
+                System.out.println("\nWhich option would you like to choose?");
+                System.out.println("Type B for Buy. Type S for Sell. Type C for Cart. Type L for Logout.");
+                System.out.print("Enter your choice: ");
+        
+                String choice = sc.next().toUpperCase();
+        
+                if (choice.equals("B")) {
+                    // TODO: Add Buy logic here
+                } else if (choice.equals("S")) {
+                    Sell.showSellMenu(sc, currentUser, itemsForSale);
+                } else if (choice.equals("C")) {
+                    Cart c = new Cart();
+                    c.showCart();
+                } else if (choice.equals("L")) {
+                    Logout.handleLogout(); // Exits the program
+                } else {
+                    System.out.println("Invalid option. Please try again.");
+                }
+            }
         }
-
-        if (choice.equals(S)) {
-            
-           // Sell s = new Sell();
-
-            //Scanner scanner;
-            //User currentuser = new User();
-            //ArrayList<List> = itemsForSale;
-
-
-            //s.Sell(scanner, currentuser, itemsForSale);
-        }
-
-        if (choice.equals(C)) {
-            
-            Cart c = new Cart();
-            c.showCart();
-        }
-
-        if (choice.equals(L)){
-
-        }
-            
-        }
-
         
          
     public static void main(String[] args) {
