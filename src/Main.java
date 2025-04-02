@@ -1,12 +1,12 @@
 package src;
 
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Scanner;
 
-import src.Sell;
-import src.Logout;
-import src.User;
-import src.Item;
+
+
+
+
 
 public class Main {
 
@@ -30,12 +30,12 @@ public class Main {
 
         String password = "Alex";
 
-      if(currentuser.equals(username) && pass.equals(password)){
-        System.out.println("Log in success!");
-        currentUser = new User("Alex", "Thimineur", "alex.thimineur@quinnipiac.edu");
-
+        if(currentuser.equals(username) && pass.equals(password)){
+         System.out.println("Log in success!");
+         currentUser = new User("Alex", "Thimineur", "alex.thimineur@quinnipiac.edu");
+       
         this.Menu();
-}
+        }
           
        else{
 
@@ -44,56 +44,57 @@ public class Main {
             if(currentuser.equals(username) && pass.equals(password)){
                 System.out.println("Log in success!");
                 currentUser = new User("Alex", "Thimineur", "alex.thimineur@quinnipiac.edu");
-                this.Menu();
+                 this.Menu();
                 break;
             }
+                   
+                    
+                    else{
+
+                        System.out.println("Log in not successful, try again.");
+                        fail++;
+                        currentuser = sc.next();
+                        pass = sc.next();  
+                    }
             
-
-                else{
-
-                    System.out.println("Log in not successful, try again.");
-                    fail++;
-                    currentuser = sc.next();
-                    pass = sc.next();
-                }       
-
-        if(fail == 3){
-
-            System.out.println("You have been locked out due to suspicious activity and forced to leave the application");
-            break;
-                }
-              }
-
-            }
+                    if(fail == 3){
             
-        } 
-        
- 
-        public void Menu() {
-            while (true) {
-                System.out.println("\nWhich option would you like to choose?");
-                System.out.println("Type B for Buy. Type S for Sell. Type C for Cart. Type L for Logout.");
-                System.out.print("Enter your choice: ");
-        
-                String choice = sc.next().toUpperCase();
-        
-                if (choice.equals("B")) {
-                    // TODO: Add Buy logic here
-                } else if (choice.equals("S")) {
-                    Sell.showSellMenu(sc, currentUser, itemsForSale);
-                } else if (choice.equals("C")) {
-                    Cart c = new Cart();
-                    c.showCart();
-                } else if (choice.equals("L")) {
-                    Logout.handleLogout(); // Exits the program
-                } else {
-                    System.out.println("Invalid option. Please try again.");
-                }
-            }
-        }
-        
-         
-    public static void main(String[] args) {
+                        System.out.println("You have been locked out due to suspicious activity and forced to leave the application");
+                        break;
+                            }
+                          }
+
+                        }  
+
+                    }
+
+
+                    public void Menu() {
+                        while (true) {
+                            System.out.println("\nWhich option would you like to choose?");
+                                System.out.println("Type B for Buy. Type S for Sell. Type C for Cart. Type L for Logout.");
+                                System.out.print("Enter your choice: ");
+                    
+                                String choice = sc.next().toUpperCase();
+                    
+                                if (choice.equals("B")) {
+                                    Buy buy = new Buy();
+                                    buy.Items();
+                                } else if (choice.equals("S")) {
+                                    Sell.showSellMenu(sc, currentUser, itemsForSale);
+                                } else if (choice.equals("C")) {
+                                    Cart c = new Cart();
+                                    c.showCart();
+                                } else if (choice.equals("L")) {
+                                    Logout.handleLogout(); // Exits the program
+                                } else {
+                                    System.out.println("Invalid option. Please try again.");
+                                }
+                            }
+                        }     
+                                
+                                
+     public static void main(String[] args) {
         
         System.out.println("\n #     #                                                                                            ######                     #                  ### \n #  #  # ###### #       ####   ####  #    # ######    #####  ####     ##### #    # ######     ####  #     #   ##   #   #      # #   #####  #####  ### \n #  #  # #      #      #    # #    # ##  ## #           #   #    #      #   #    # #         #    # #     #  #  #   # #      #   #  #    # #    # ### \n #  #  # #####  #      #      #    # # ## # #####       #   #    #      #   ###### #####     #    # ######  #    #   #      #     # #    # #    #  #  \n #  #  # #      #      #      #    # #    # #           #   #    #      #   #    # #         #  # # #     # ######   #      ####### #####  #####      \n #  #  # #      #      #    # #    # #    # #           #   #    #      #   #    # #         #   #  #     # #    #   #      #     # #      #      ### \n  ## ##  ###### ######  ####   ####  #    # ######      #    ####       #   #    # ######     ### # ######  #    #   #      #     # #      #      ### \n                                                                                                                                                      \n   \n ");
 
