@@ -1,37 +1,78 @@
 package src;
 
+import java.util.ArrayList;
+
+/**
+ * Handles shopping cart functionality
+ */
 public class Cart {
+    private static ArrayList<Item> cartItems = new ArrayList<>();
+
+    /**
+     * Adds an item to the cart
+     * @param item The item to add
+     */
+    public static void addToCart(Item item) {
+        if(item != null) {
+            cartItems.add(item);
+        }
+    }
+
+    /**
+     * @return List of items in cart
+     */
+    public static ArrayList<Item> getCartItems() {
+        return cartItems;
+    }
+
+    /**
+     * Displays cart contents and handles cart operations
+     */
     public static void showCart() {
-        // These come from the real cart later
-        String[] itemNames = {"Textbook", "Desk Lamp", "Coffee Mug"};
-        double[] prices = {45.99, 22.50, 12.75};
-        
         System.out.println("\n--- YOUR CART ---");
         
-        // Show empty cart if no items
-        if (itemNames.length == 0) {
+        if(cartItems.isEmpty()) {
             System.out.println("(Your cart is empty)");
         } 
-        // Otherwise list items
         else {
             double total = 0;
-            for (int i = 0; i < itemNames.length; i++) {
+            for(int i = 0; i < cartItems.size(); i++) {
+                Item item = cartItems.get(i);
                 System.out.printf("%d. %s - $%.2f%n", 
-                    i+1, itemNames[i], prices[i]);
-                total += prices[i];
+                    i+1, item.getName(), item.getPrice());
+                total += item.getPrice();
             }
             System.out.printf("TOTAL: $%.2f%n", total);
         }
         
-        // Basic menu
         System.out.println("\n1. Checkout");
         System.out.println("2. Remove item");
         System.out.println("3. Back to menu");
         System.out.print("Choose: ");
     }
 
-    // Just for testing - can remove later
-    public static void main(String[] args) {
-        showCart();
+    /**
+     * Completes purchase and clears cart
+     */
+    public static void checkout() {
+        if(!cartItems.isEmpty()) {
+            System.out.println("\nPurchase complete! Items will be shipped.");
+            cartItems.clear();
+        } else {
+            System.out.println("\nYour cart is empty!");
+        }
+    }
+
+    /**
+     * Removes specified item from cart
+     * @param index The index of item to remove
+     */
+    public static void removeItem(int index) {
+        if(index >= 0 && index < cartItems.size()) {
+            Item removed = cartItems.remove(index);
+            System.out.println(removed.getName() + " removed from cart.");
+        } else {
+            System.out.println("Invalid item number.");
+        }
     }
 }

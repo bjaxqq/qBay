@@ -5,87 +5,79 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Buy {
-
-public void Items(){
-
-    System.out.println("Here are the items for sale. Please select the item you would like by typing the name."); 
     
-    String[] list = {"Textbook", "Desk Lamp", "Coffee Mug"};
-    System.out.println(Arrays.toString(list));
+    /**
+     * Displays items for sale and handles purchase flow
+     */
+    public void Items() {
+        System.out.println("\nHere are the items for sale. Please select the item you would like by typing the name."); 
+        
+        // Initialize available items
+        String[] list = {"Textbook", "Desk Lamp", "Coffee Mug", "Dorm Chair", "Calculus Notes"};
+        System.out.println(Arrays.toString(list));
 
-    Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in); // Removed try-with-resources
 
-    //make 3 item objects for each of the items
+        // Create sample users
+        User user1 = new User("Christian", "Duncan", "christianduncan@gmail.com");
+        User user2 = new User("Aditi", "Baghel", "asbaghel@gmail.com");
+        User user3 = new User("Brian", "O'Neill", "oneillbrian@gmail.com");
 
-    User user1 = new User("Christian", "Duncan", "christianduncan@gmail.com");
-    User user2 = new User("Aditi", "Baghel", "asbaghel@gmail.com");
-    User user3 = new User("Brian", "O'Neill", "oneillbrian@gmail.com");
+        // Create items for sale
+        ArrayList<Item> itemsForSale = new ArrayList<>();
+        itemsForSale.add(new Item("Textbook", "School Supplies", 45.99, user1));
+        itemsForSale.add(new Item("Desk Lamp", "Dorm Items", 22.50, user2));
+        itemsForSale.add(new Item("Coffee Mug", "Dorm Items", 12.75, user3));
+        itemsForSale.add(new Item("Dorm Chair", "Furniture", 35.00, user1));
+        itemsForSale.add(new Item("Calculus Notes", "School Supplies", 8.99, user3));
 
-    Item item1 = new Item("Textbook", "School Supplies", 45.99, user1);
-    Item item2 = new Item("Desk Lamp", "Dorm Items", 22.50, user2);
-    Item item3 = new Item("Coffee Mug", "Dorm Items", 12.75, user3);
-    ArrayList<Item> itemForSale = new ArrayList<>();
-
-    itemForSale.add(item1);
-    itemForSale.add(item2);
-    itemForSale.add(item3);
-
-    String option = sc.nextLine().toUpperCase();
-    String option2 = null;
-    String info = "INFO";
-    System.out.println(option);
-
-    if(option.equals("TEXTBOOK") || option.equals("DESK LAMP") || option.equals("COFFEE MUG")){
-
-        System.out.println("Type C if you would like to add the item to cart?");
-        System.out.println("Or type Info to find out more information on the item");
-        option2 = sc.next().toUpperCase();
-       
-    }
-    
-    if(option2.equals("C")){
-
-        Cart cart = new Cart();
-        cart.showCart();
-
-    }
-
-    //Item item;
-
-    
-    else if(option2.equals(info) && option.equals("TEXTBOOK")){
-
-       System.out.println("Item Name: " + item1.getName());
-       System.out.println("Category: " + item1.getCategory());
-       System.out.println("Price: " + item1.getPrice());
-       System.out.println("Seller: " + item1.getSeller().getFullName() + ", " + item1.getSeller().getEmail());
-
+        String option = sc.nextLine().toUpperCase();
+        String option2 = null;
+        final String INFO = "INFO";
+        
+        if(option.equals("TEXTBOOK") || option.equals("DESK LAMP") || 
+           option.equals("COFFEE MUG") || option.equals("DORM CHAIR") || 
+           option.equals("CALCULUS NOTES")) {
+            
+            System.out.println("\nType C to add the item to cart");
+            System.out.println("Or type Info for more details");
+            option2 = sc.nextLine().toUpperCase();
+        }
+        
+        if(option2 != null && option2.equals("C")) {
+            // Add selected item to cart
+            Cart.addToCart(findItemByName(itemsForSale, option));
+            System.out.println(option + " added to cart!");
+        }
+        else if(option2 != null && option2.equals(INFO)) {
+            displayItemInfo(itemsForSale, option);
+        }
     }
 
-    else if(option2.equals(info) && option.equals("DESK LAMP")){
-
-        System.out.println("Item Name: " + item2.getName());
-        System.out.println("Category: " + item2.getCategory());
-        System.out.println("Price: " + item2.getPrice());
-        System.out.println("Seller: " + item2.getSeller().getFullName() + ", " + item2.getSeller().getEmail());
-    }
-    else if(option2.equals(info) && option.equals("COFFEE MUG")){
-
-        System.out.println("Item Name: " + item3.getName());
-        System.out.println("Category: " + item3.getCategory());
-        System.out.println("Price: " + item3.getPrice());
-        System.out.println("Seller: " + item3.getSeller().getFullName() + ", " + item3.getSeller().getEmail());
+    /**
+     * Helper method to find item by name
+     */
+    private Item findItemByName(ArrayList<Item> items, String name) {
+        for(Item item : items) {
+            if(item.getName().equalsIgnoreCase(name)) {
+                return item;
+            }
+        }
+        return null;
     }
 
-    
+    /**
+     * Displays detailed information about an item
+     */
+    private void displayItemInfo(ArrayList<Item> items, String itemName) {
+        Item item = findItemByName(items, itemName);
+        if(item != null) {
+            System.out.println("\n--- ITEM DETAILS ---");
+            System.out.println("Name: " + item.getName());
+            System.out.println("Category: " + item.getCategory());
+            System.out.println("Price: $" + String.format("%.2f", item.getPrice()));
+            System.out.println("Seller: " + item.getSeller().getFullName() + 
+                              ", " + item.getSeller().getEmail());
+        }
+    }
 }
-public static void main(String[] args){
-
-    Buy obj = new Buy();
-
-    obj.Items();
-
-   
-}
-}
-
