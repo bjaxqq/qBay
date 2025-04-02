@@ -1,5 +1,8 @@
 package src;
 
+/**
+ * Represents an item available for purchase/sale
+ */
 public class Item {
     private String name;
     private String category;
@@ -13,6 +16,7 @@ public class Item {
         this.seller = seller;
     }
 
+    // Getters
     public String getName() {
         return name;
     }
